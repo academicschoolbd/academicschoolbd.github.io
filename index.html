@@ -54,79 +54,103 @@
     .date-card {
       background: #e3f2fd;
       border-radius: 12px;
-      padding: 12px;
+      padding: 10px;
       text-align: center;
-      font-size: 16px;
+      font-size: 15px;
       color: #0d47a1;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
       border: 1px solid #bbdefb;
     }
 
+    /* Two cards per row on mobile */
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
     .card {
       background: white;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
       text-decoration: none;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .card-content {
-      padding: 20px;
+      padding: 16px;
       text-align: center;
     }
 
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
     .card-icon {
-      font-size: 48px;
+      font-size: 40px;
       color: #4a6fa5;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .card-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: #1a237e;
     }
 
     .card-desc {
-      font-size: 14px;
+      font-size: 13px;
       color: #555;
       margin-top: 6px;
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
-    .card-meta {
-      font-size: 13px;
-      color: #777;
-      margin-top: 4px;
+    .btn-more {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-more:hover {
+      background-color: #3a5a8c;
+    }
+
+    .extra-tools {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .extra-tools.show {
+      display: grid;
     }
 
     .install-btn {
       display: block;
       width: 100%;
-      padding: 14px;
+      padding: 12px;
       background-color: #2e7d32;
       color: white;
       border: none;
-      border-radius: 12px;
-      font-size: 16px;
+      border-radius: 10px;
+      font-size: 15px;
       font-weight: 500;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-bottom: 16px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      margin-bottom: 14px;
       text-transform: uppercase;
     }
 
@@ -136,10 +160,10 @@
 
     footer {
       text-align: center;
-      margin-top: 40px;
-      padding: 20px;
+      margin-top: 30px;
+      padding: 16px;
       color: #666;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     footer .love {
@@ -147,11 +171,23 @@
     }
 
     @media (max-width: 600px) {
-      h1 {
-        font-size: 24px;
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+      }
+      .card {
+        padding: 14px;
+      }
+      .card-icon {
+        font-size: 36px;
       }
       .card-title {
-        font-size: 17px;
+        font-size: 15px;
+      }
+      .card-desc {
+        font-size: 12px;
+      }
+      h1 {
+        font-size: 24px;
       }
     }
   </style>
@@ -171,76 +207,83 @@
       📲 অ্যাপ ইনস্টল করুন
     </button>
 
-    <!-- All Cards -->
+    <!-- Main Menu -->
     <div class="menu-grid">
-
-      <!-- Quote Card -->
       <a href="quote.html" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">format_quote</span>
-          <div class="card-title">উদ্ধৃতি তৈরি করুন</div>
-          <div class="card-desc">আপনার প্রিয় উদ্ধৃতি নিজে তৈরি করুন</div>
-        </div>
+        <span class="material-icons card-icon">format_quote</span>
+        <div class="card-title">উদ্ধৃতি</div>
+        <div class="card-desc">আপনার প্রিয় উদ্ধৃতি তৈরি করুন</div>
       </a>
 
-      <!-- Chat Card -->
+      <a href="books/" class="card">
+        <span class="material-icons card-icon">menu_book</span>
+        <div class="card-title">পিডিএফ বই</div>
+        <div class="card-desc">পিডিএফ বই, নোট, সমাধান ডাউনলোড করুন</div>
+      </a>
+
       <a href="https://wa.me/8801700000000" target="_blank" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">chat</span>
-          <div class="card-title">চ্যাট করুন</div>
-          <div class="card-desc">WhatsApp-এ চ্যাট করুন</div>
-        </div>
+        <span class="material-icons card-icon">chat</span>
+        <div class="card-title">চ্যাট</div>
+        <div class="card-desc">WhatsApp-এ চ্যাট করুন</div>
       </a>
 
-      <!-- Admin Card -->
       <a href="admin.html" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">admin_panel_settings</span>
-          <div class="card-title">অ্যাডমিন</div>
-          <div class="card-desc">অ্যাডমিন প্যানেলে প্রবেশ করুন</div>
-        </div>
+        <span class="material-icons card-icon">admin_panel_settings</span>
+        <div class="card-title">অ্যাডমিন</div>
+        <div class="card-desc">অ্যাডমিন প্যানেলে প্রবেশ করুন</div>
       </a>
 
-      <!-- Academic School -->
+      <!-- Telegram Channels -->
       <a href="https://t.me/academicschoolbd" target="_blank" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">school</span>
-          <div class="card-title">📘 Academic School</div>
-          <div class="card-desc">বই, নোট, প্রশ্নের সমাধান, গুরুত্বপূর্ণ টিউটোরিয়াল, অ্যাসাইনমেন্ট, পিডিএফ বই এবং আরও অনেক কিছু</div>
-          <div class="card-meta">অফিসিয়াল চ্যানেল</div>
-        </div>
+        <span class="material-icons card-icon">school</span>
+        <div class="card-title">📘 Academic School</div>
+        <div class="card-desc">বই, নোট, সমাধান, অ্যাসাইনমেন্ট, পিডিএফ বই</div>
       </a>
 
-      <!-- PDF EducoxBd -->
       <a href="https://t.me/pdf_educoxbd" target="_blank" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">menu_book</span>
-          <div class="card-title">📥 PDF EducoxBd</div>
-          <div class="card-desc">পিডিএফ বই, নোট, সমাধান এবং অ্যাসাইনমেন্ট ডাউনলোড করুন</div>
-          <div class="card-meta">914+ সদস্য</div>
-        </div>
+        <span class="material-icons card-icon">download</span>
+        <div class="card-title">📥 PDF EducoxBd</div>
+        <div class="card-desc">পিডিএফ বই ও নোট ডাউনলোড করুন</div>
       </a>
 
-      <!-- Daily ePapers BD -->
       <a href="https://t.me/daily_epapersbd" target="_blank" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">newspaper</span>
-          <div class="card-title">📰 Daily ePapers BD</div>
-          <div class="card-desc">প্রতিদিনের পত্রিকা পড়ুন – প্রথম আলো, কালের কণ্ঠ, যুগান্তর ইত্যাদি</div>
-          <div class="card-meta">প্রতিদিনের আপডেট</div>
-        </div>
+        <span class="material-icons card-icon">newspaper</span>
+        <div class="card-title">📰 Daily ePapers BD</div>
+        <div class="card-desc">প্রতিদিনের পত্রিকা পড়ুন</div>
       </a>
 
-      <!-- Educox -->
       <a href="https://t.me/educox" target="_blank" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">auto_stories</span>
-          <div class="card-title">📚 Educox</div>
-          <div class="card-desc">Academic School-এর অফিসিয়াল চ্যানেল – সকল শিক্ষা সংক্রান্ত আপডেট</div>
-          <div class="card-meta">অফিসিয়াল চ্যানেল</div>
-        </div>
+        <span class="material-icons card-icon">auto_stories</span>
+        <div class="card-title">📚 Educox</div>
+        <div class="card-desc">Academic School-এর অফিসিয়াল চ্যানেল</div>
       </a>
+    </div>
 
+    <!-- More Tools Button -->
+    <button class="btn-more" id="moreBtn">➕ আরও টুলস</button>
+
+    <!-- Extra Tools -->
+    <div class="extra-tools" id="extraTools">
+      <a href="notes.html" class="card">
+        <span class="material-icons card-icon">sticky_note_2</span>
+        <div class="card-title">নোট</div>
+        <div class="card-desc">গুরুত্বপূর্ণ নোট সংরক্ষণ করুন</div>
+      </a>
+      <a href="calendar.html" class="card">
+        <span class="material-icons card-icon">event</span>
+        <div class="card-title">তারিখ</div>
+        <div class="card-desc">পয়গাম তারিখ চেক করুন</div>
+      </a>
+      <a href="games.html" class="card">
+        <span class="material-icons card-icon">sports_esports</span>
+        <div class="card-title">গেমস</div>
+        <div class="card-desc">মজার গেম খেলুন</div>
+      </a>
+      <a href="backup/" class="card">
+        <span class="material-icons card-icon">cloud_download</span>
+        <div class="card-title">ব্যাকআপ</div>
+        <div class="card-desc">আপনার ডেটা ব্যাকআপ নিন</div>
+      </a>
     </div>
 
     <!-- Footer -->
@@ -251,13 +294,22 @@
 
   </div>
 
-  <!-- Scripts -->
   <script>
-    // ========== 1. Current Year & Date ==========
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('dateCard').textContent = new Date().toLocaleDateString('bn-BD', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
+    // ========== 1. Bangla Date ==========
+    const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+    const days = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
+
+    function updateDate() {
+      const now = new Date();
+      const day = days[now.getDay()];
+      const date = now.getDate();
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
+      const formatted = `${day}, ${date} ${month}, ${year}`.replace(/\d/g, d => banglaDigits[d]);
+      document.getElementById('dateCard').textContent = formatted;
+    }
+    updateDate();
 
     // ========== 2. PWA Install Prompt ==========
     let deferredPrompt;
@@ -279,7 +331,18 @@
       }
     });
 
-    // ========== 3. Register Service Worker ==========
+    // ========== 3. More Tools Toggle ==========
+    document.getElementById('moreBtn').addEventListener('click', () => {
+      const tools = document.getElementById('extraTools');
+      tools.classList.toggle('show');
+      document.getElementById('moreBtn').textContent = 
+        tools.classList.contains('show') ? '➖ কম দেখান' : '➕ আরও টুলস';
+    });
+
+    // ========== 4. Current Year in Footer ==========
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ========== 5. Service Worker Registration ==========
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
