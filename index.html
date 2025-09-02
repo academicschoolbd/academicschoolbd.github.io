@@ -1,353 +1,254 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" manifest="offline.appcache">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>বাংলা পোস্টকার্ড – চূড়ান্ত সংস্করণ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#4a6fa5">
+  <meta name="description" content="বাংলায় উদ্ধৃতি, চ্যাট, বই এবং আরও অনেক কিছু">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>আমার বাংলা অ্যাপ</title>
 
-  <!-- Bangla Fonts -->
-  <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
-  <link href="https://fonts.maateen.me/bensen-handwriting/font.css" rel="stylesheet">
+  <!-- Google Fonts: Bangla Support -->
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
   <style>
-    :root {
-      --primary: #4a6fa5;
-      --text: #333;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Hind Siliguri', sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 40px 20px;
+      background: #f5f5f5;
+      padding: 40px 20px 80px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      color: var(--text);
-      transition: background 0.4s ease;
+      color: #333;
     }
 
-    /* Background Themes */
-    body.bg-1 { background: #e3f2fd; }
-    body.bg-2 { background: #f3e5f5; }
-    body.bg-3 { background: #e8f5e8; }
-    body.bg-4 { background: #fff3e0; }
-    body.bg-5 { background: #fff8e1; }
+    h1 {
+      font-size: 28px;
+      color: #1a237e;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 600;
+    }
 
-    .card-wrapper {
-      width: 400px;
-      height: 400px;
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
     }
 
     .card {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 16px;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      box-sizing: border-box;
-      background: #ffffff;
-      border: 6px solid #ffffff;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      position: relative;
     }
 
-    .quote {
-      font-size: 28px;
+    .card:hover, .card:active {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transform: translateY(-6px);
+    }
+
+    .card-content {
+      padding: 24px;
+      text-align: center;
+      color: #333;
+    }
+
+    .card-icon {
+      font-size: 48px;
+      color: #4a6fa5;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 20px;
       font-weight: 600;
-      margin: 0 0 12px;
-      line-height: 1.55;
-      padding: 0 10px;
-      min-height: 150px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: #1a237e;
     }
 
-    .author-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 18px;
-      font-weight: 600;
-      min-height: 40px;
+    /* More Section */
+    .more-section {
+      margin-top: 40px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .more-section h2 {
+      font-size: 22px;
       color: #c62828;
+      margin-bottom: 16px;
+      text-align: center;
     }
 
-    .author-container i {
-      font-size: 18px;
-      transition: transform 0.3s ease;
-    }
-
-    .author-container:hover i {
-      transform: rotate(-10deg);
-    }
-
-    /* Control Panel */
-    .control-panel {
-      margin-top: 30px;
-      width: 400px;
-      max-width: 100%;
+    .more-buttons {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 16px;
-    }
-
-    .control-group {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .control-group select,
-    .control-group input[type="color"] {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      justify-content: center;
     }
 
     .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px;
+      padding: 14px 20px;
       background-color: #4a6fa5;
       color: white;
       border: none;
-      border-radius: 10px;
-      cursor: pointer;
+      border-radius: 8px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      transition: all 0.3s;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-top: 10px;
-    }
-
-    .btn.download {
-      background-color: #2e7d32;
+      letter-spacing: 0.5px;
     }
 
     .btn:hover {
-      opacity: 0.9;
+      background-color: #3a5a8c;
+      transform: scale(1.03);
     }
 
-    /* Font Classes */
-    .font-default {
-      font-family: 'Hind Siliguri', sans-serif !important;
-    }
-    .font-solaiman {
-      font-family: 'SolaimanLipi', serif !important;
-    }
-    .font-bensen {
-      font-family: 'BenSen Handwriting', cursive, sans-serif !important;
-    }
-  </style>
-</head>
-<body id="body">
-
-  <!-- Postcard -->
-  <div class="card-wrapper" id="postcard">
-    <div class="card">
-      <p class="quote font-default" id="quoteText">"জীবন সংগ্রামে হার মানো না, চেষ্টা চালিয়ে যাও।"</p>
-      <div class="author-container font-default" id="authorContainer">
-        <i class="fas fa-feather" id="iconDisplay"></i>
-        <span id="authorText">বঙ্কিমচন্দ্র চট্টোপাধ্যায়</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Control Panel -->
-  <div class="control-panel">
-    <div class="material-input">
-      <input type="text" id="quoteInput" placeholder=" " />
-      <label for="quoteInput">উদ্ধৃতি লিখুন</label>
-    </div>
-    <div class="material-input">
-      <input type="text" id="authorInput" placeholder=" " />
-      <label for="authorInput">লেখকের নাম লিখুন</label>
-    </div>
-
-    <!-- Font Selection -->
-    <div class="control-group">
-      <select id="fontSelect" onchange="changeFont()">
-        <option value="default">Hind Siliguri</option>
-        <option value="solaiman">Solaiman Lipi</option>
-        <option value="bensen">Bensen Handwriting</option>
-      </select>
-    </div>
-
-    <!-- Icon Selection -->
-    <div class="control-group">
-      <select id="iconSelect" onchange="changeIcon()">
-        <option value="feather">🖋️ কলম (Feather)</option>
-        <option value="pen">✏️ পেন</option>
-        <option value="edit">✍️ লেখা</option>
-        <option value="feather-alt">🖋️ ফাউন্টেন পেন</option>
-      </select>
-    </div>
-
-    <!-- Page Background -->
-    <div class="control-group">
-      <select id="bgSelect" onchange="changeBackground()">
-        <option value="1">Light Blue</option>
-        <option value="2">Lavender</option>
-        <option value="3">Mint Green</option>
-        <option value="4">Warm Peach</option>
-        <option value="5">Soft Yellow</option>
-      </select>
-    </div>
-
-    <!-- Card Background -->
-    <div class="control-group">
-      <input type="color" id="cardBgPicker" value="#ffffff" onchange="changeCardBg()">
-      <label>কার্ড রং</label>
-    </div>
-
-    <!-- Quote Color -->
-    <div class="control-group">
-      <input type="color" id="quoteColorPicker" value="#1a237e" onchange="changeQuoteColor()">
-      <label>উদ্ধৃতি রং</label>
-    </div>
-
-    <!-- Author Color -->
-    <div class="control-group">
-      <input type="color" id="authorColorPicker" value="#c62828" onchange="changeAuthorColor()">
-      <label>লেখক রং</label>
-    </div>
-
-    <!-- Buttons -->
-    <button class="btn" onclick="updatePostcard()">
-      <i class="fas fa-sync-alt"></i> আপডেট করুন
-    </button>
-    <button class="btn download" onclick="saveAsPNG()">
-      <i class="fas fa-download"></i> ডাউনলোড করুন
-    </button>
-  </div>
-
-  <!-- Hidden Canvas -->
-  <canvas id="canvas" style="display:none;"></canvas>
-
-  <!-- html2canvas -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-  <script>
-    const body = document.getElementById('body');
-    const card = document.querySelector('.card');
-    const quoteText = document.getElementById('quoteText');
-    const authorContainer = document.getElementById('authorContainer');
-    const iconDisplay = document.getElementById('iconDisplay');
-
-    function updatePostcard() {
-      const quote = document.getElementById('quoteInput').value.trim();
-      const author = document.getElementById('authorInput').value.trim();
-
-      quoteText.innerText = quote ? `"${quote}"` : '"জীবন সংগ্রামে হার মানো না, চেষ্টা চালিয়ে যাও।"';
-      document.getElementById('authorText').innerText = author ? author : 'বঙ্কিমচন্দ্র চট্টোপাধ্যায়';
-
-      changeFont();
-      changeIcon();
-      changeCardBg();
-      changeQuoteColor();
-      changeAuthorColor();
+    .btn:active {
+      transform: scale(0.98);
     }
 
-    function changeFont() {
-      const font = document.getElementById('fontSelect').value;
+    .btn.pdf { background-color: #d32f2f; }
+    .btn.pdf:hover { background-color: #b71c1c; }
 
-      quoteText.className = 'quote';
-      authorContainer.className = 'author-container';
+    .btn.chat { background-color: #0288d1; }
+    .btn.chat:hover { background-color: #01579b; }
 
-      if (font === 'solaiman') {
-        quoteText.classList.add('font-solaiman');
-        authorContainer.classList.add('font-solaiman');
-      } else if (font === 'bensen') {
-        quoteText.classList.add('font-bensen');
-        authorContainer.classList.add('font-bensen');
-      } else {
-        quoteText.classList.add('font-default');
-        authorContainer.classList.add('font-default');
+    .btn.admin { background-color: #7b1fa2; }
+    .btn.admin:hover { background-color: #51057a; }
+
+    /* Offline Indicator */
+    .offline-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #d32f2f;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      font-size: 14px;
+      display: none;
+      z-index: 1000;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1, .more-section h2 {
+        font-size: 24px;
+      }
+      .menu-container {
+        grid-template-columns: 1fr;
+      }
+      body {
+        padding: 20px 10px 70px;
       }
     }
 
-    function changeIcon() {
-      const icon = document.getElementById('iconSelect').value;
-      iconDisplay.className = '';
-      iconDisplay.classList.add('fas', `fa-${icon}`);
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 22px;
+      }
+      .card-title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Title -->
+  <h1>আমার বাংলা অ্যাপ</h1>
+
+  <!-- Cards -->
+  <div class="menu-container">
+    <a href="quote.html" class="card">
+      <div class="card-content">
+        <span class="material-icons card-icon">format_quote</span>
+        <div class="card-title">উদ্ধৃতি</div>
+      </div>
+    </a>
+
+    <a href="https://wa.me/yournumber" target="_blank" class="card">
+      <div class="card-content">
+        <span class="material-icons card-icon">chat</span>
+        <div class="card-title">চ্যাট করুন</div>
+      </div>
+    </a>
+
+    <a href="admin.html" class="card">
+      <div class="card-content">
+        <span class="material-icons card-icon">admin_panel_settings</span>
+        <div class="card-title">অ্যাডমিন</div>
+      </div>
+    </a>
+
+    <a href="books/" class="card">
+      <div class="card-content">
+        <span class="material-icons card-icon">menu_book</span>
+        <div class="card-title">পিডিএফ বই</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- More Buttons -->
+  <div class="more-section">
+    <h2>আরও সুবিধা</h2>
+    <div class="more-buttons">
+      <button class="btn pdf" onclick="alert('PDF ডাউনলোড হচ্ছে...')">📚 বই ডাউনলোড</button>
+      <button class="btn chat" onclick="alert('চ্যাট শুরু হচ্ছে...')">💬 লাইভ চ্যাট</button>
+      <button class="btn admin" onclick="alert('অ্যাডমিন প্যানেল লোড হচ্ছে...')">🔐 অ্যাডমিন</button>
+      <button class="btn" onclick="alert('নোট খুলতেছে...')">📝 নোট</button>
+    </div>
+  </div>
+
+  <!-- Offline Bar -->
+  <div class="offline-bar" id="offlineBar">ইন্টারনেট নেই — অফলাইন মোড</div>
+
+  <!-- Service Worker -->
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('SW registered: ', reg))
+          .catch(err => console.log('SW failed: ', err));
+      });
     }
 
-    function changeBackground() {
-      body.className = `bg-${document.getElementById('bgSelect').value}`;
-    }
+    // Offline/Online Detection
+    window.addEventListener('online', () => document.getElementById('offlineBar').style.display = 'none');
+    window.addEventListener('offline', () => document.getElementById('offlineBar').style.display = 'block');
 
-    function changeCardBg() {
-      card.style.background = document.getElementById('cardBgPicker').value;
-    }
-
-    function changeQuoteColor() {
-      quoteText.style.color = document.getElementById('quoteColorPicker').value;
-    }
-
-    function changeAuthorColor() {
-      const color = document.getElementById('authorColorPicker').value;
-      authorContainer.style.color = color;
-      iconDisplay.style.color = color;
-    }
-
-    function saveAsPNG() {
-      const element = document.getElementById('postcard');
-      const canvas = document.getElementById('canvas');
-      const scale = 3;
-
-      canvas.width = 400 * scale;
-      canvas.height = 400 * scale;
-
-      // No alert — silent processing
-      setTimeout(() => {
-        html2canvas(element, {
-          canvas: canvas,
-          scale: scale,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: null,
-          logging: false,
-          width: 400,
-          height: 400
-        }).then(canvas => {
-          const link = document.createElement('a');
-          link.download = 'bangla-postcard.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click(); // Auto-download
-        }).catch(() => {
-          // Fail silently
-          alert("ডাউনলোড করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।");
-        });
-      }, 1000); // Slight delay for rendering
-    }
-
-    // Initialize
-    changeFont();
-    changeIcon();
-    changeBackground();
-    changeCardBg();
-    changeQuoteColor();
-    changeAuthorColor();
+    // Show offline status on load
+    window.onload = () => {
+      if (!navigator.onLine) {
+        document.getElementById('offlineBar').style.display = 'block';
+      }
+    };
   </script>
- </body>
+
+</body>
 </html>
