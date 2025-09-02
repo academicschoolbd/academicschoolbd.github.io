@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#4a6fa5" />
-  <meta name="description" content="বাংলা উদ্ধৃতি, বই, চ্যাট এবং আরও অনেক কিছু" />
+  <meta name="description" content="Academic School, PDF EducoxBd, Daily ePapers BD, Educox - এক জায়গায় সব" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="আমার বাংলা অ্যাপ" />
@@ -65,7 +65,7 @@
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
       margin-bottom: 30px;
     }
@@ -77,7 +77,6 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
       text-decoration: none;
-      position: relative;
     }
 
     .card:hover {
@@ -102,36 +101,17 @@
       color: #1a237e;
     }
 
-    .btn-more {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      background-color: #4a6fa5;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
+    .card-desc {
+      font-size: 14px;
+      color: #555;
+      margin-top: 6px;
+      line-height: 1.5;
     }
 
-    .btn-more:hover {
-      background-color: #3a5a8c;
-    }
-
-    .extra-tools {
-      display: none;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .extra-tools.show {
-      display: grid;
+    .card-meta {
+      font-size: 13px;
+      color: #777;
+      margin-top: 4px;
     }
 
     .install-btn {
@@ -154,18 +134,16 @@
       background-color: #1b5e20;
     }
 
-    .offline-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #d32f2f;
-      color: white;
+    footer {
       text-align: center;
-      padding: 8px;
+      margin-top: 40px;
+      padding: 20px;
+      color: #666;
       font-size: 14px;
-      display: none;
-      z-index: 1000;
+    }
+
+    footer .love {
+      color: red;
     }
 
     @media (max-width: 600px) {
@@ -174,9 +152,6 @@
       }
       .card-title {
         font-size: 17px;
-      }
-      .menu-grid, .extra-tools {
-        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -196,99 +171,102 @@
       📲 অ্যাপ ইনস্টল করুন
     </button>
 
-    <!-- Main Menu -->
+    <!-- All Cards -->
     <div class="menu-grid">
+
+      <!-- Quote Card -->
       <a href="quote.html" class="card">
         <div class="card-content">
           <span class="material-icons card-icon">format_quote</span>
           <div class="card-title">উদ্ধৃতি তৈরি করুন</div>
+          <div class="card-desc">আপনার প্রিয় উদ্ধৃতি নিজে তৈরি করুন</div>
         </div>
       </a>
 
-      <a href="books/" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">menu_book</span>
-          <div class="card-title">পিডিএফ বই</div>
-        </div>
-      </a>
-
+      <!-- Chat Card -->
       <a href="https://wa.me/8801700000000" target="_blank" class="card">
         <div class="card-content">
           <span class="material-icons card-icon">chat</span>
           <div class="card-title">চ্যাট করুন</div>
+          <div class="card-desc">WhatsApp-এ চ্যাট করুন</div>
         </div>
       </a>
 
+      <!-- Admin Card -->
       <a href="admin.html" class="card">
         <div class="card-content">
           <span class="material-icons card-icon">admin_panel_settings</span>
           <div class="card-title">অ্যাডমিন</div>
+          <div class="card-desc">অ্যাডমিন প্যানেলে প্রবেশ করুন</div>
         </div>
       </a>
+
+      <!-- Academic School -->
+      <a href="https://t.me/academicschoolbd" target="_blank" class="card">
+        <div class="card-content">
+          <span class="material-icons card-icon">school</span>
+          <div class="card-title">📘 Academic School</div>
+          <div class="card-desc">বই, নোট, প্রশ্নের সমাধান, গুরুত্বপূর্ণ টিউটোরিয়াল, অ্যাসাইনমেন্ট, পিডিএফ বই এবং আরও অনেক কিছু</div>
+          <div class="card-meta">অফিসিয়াল চ্যানেল</div>
+        </div>
+      </a>
+
+      <!-- PDF EducoxBd -->
+      <a href="https://t.me/pdf_educoxbd" target="_blank" class="card">
+        <div class="card-content">
+          <span class="material-icons card-icon">menu_book</span>
+          <div class="card-title">📥 PDF EducoxBd</div>
+          <div class="card-desc">পিডিএফ বই, নোট, সমাধান এবং অ্যাসাইনমেন্ট ডাউনলোড করুন</div>
+          <div class="card-meta">914+ সদস্য</div>
+        </div>
+      </a>
+
+      <!-- Daily ePapers BD -->
+      <a href="https://t.me/daily_epapersbd" target="_blank" class="card">
+        <div class="card-content">
+          <span class="material-icons card-icon">newspaper</span>
+          <div class="card-title">📰 Daily ePapers BD</div>
+          <div class="card-desc">প্রতিদিনের পত্রিকা পড়ুন – প্রথম আলো, কালের কণ্ঠ, যুগান্তর ইত্যাদি</div>
+          <div class="card-meta">প্রতিদিনের আপডেট</div>
+        </div>
+      </a>
+
+      <!-- Educox -->
+      <a href="https://t.me/educox" target="_blank" class="card">
+        <div class="card-content">
+          <span class="material-icons card-icon">auto_stories</span>
+          <div class="card-title">📚 Educox</div>
+          <div class="card-desc">Academic School-এর অফিসিয়াল চ্যানেল – সকল শিক্ষা সংক্রান্ত আপডেট</div>
+          <div class="card-meta">অফিসিয়াল চ্যানেল</div>
+        </div>
+      </a>
+
     </div>
 
-    <!-- More Tools Button -->
-    <button class="btn-more" id="moreBtn">➕ আরও টুলস</button>
-
-    <!-- Extra Tools (Dynamic) -->
-    <div class="extra-tools" id="extraTools">
-      <a href="notes.html" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">sticky_note_2</span>
-          <div class="card-title">নোট সংগ্রহ</div>
-        </div>
-      </a>
-      <a href="calendar.html" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">event</span>
-          <div class="card-title">পয়গাম তারিখ</div>
-        </div>
-      </a>
-      <a href="games.html" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">sports_esports</span>
-          <div class="card-title">গেমস</div>
-        </div>
-      </a>
-      <a href="backup/" class="card">
-        <div class="card-content">
-          <span class="material-icons card-icon">cloud_download</span>
-          <div class="card-title">ব্যাকআপ</div>
-        </div>
-      </a>
-    </div>
+    <!-- Footer -->
+    <footer>
+      &copy; <span id="year"></span> আমার বাংলা অ্যাপ | ডিজাইন করা হয়েছে <span class="love">❤️</span> দিয়ে 
+      <strong>Abu Taher</strong> এর দ্বারা
+    </footer>
 
   </div>
 
-  <!-- Offline Bar -->
-  <div class="offline-bar" id="offlineBar">ইন্টারনেট নেই — অফলাইন মোড</div>
-
+  <!-- Scripts -->
   <script>
-    // ========== 1. Date in Bangla ==========
-    const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-    const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
-    const days = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
+    // ========== 1. Current Year & Date ==========
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('dateCard').textContent = new Date().toLocaleDateString('bn-BD', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
 
-    function updateDate() {
-      const now = new Date();
-      const day = days[now.getDay()];
-      const date = now.getDate();
-      const month = months[now.getMonth()];
-      const year = now.getFullYear();
-
-      const formatted = `${day}, ${date} ${month}, ${year}`.replace(/\d/g, d => banglaDigits[d]);
-      document.getElementById('dateCard').textContent = formatted;
-    }
-    updateDate();
-
-    // ========== 2. Install Prompt ==========
+    // ========== 2. PWA Install Prompt ==========
     let deferredPrompt;
     const installBtn = document.getElementById('installBtn');
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      installBtn.style.display = 'block'; // Show install button
+      installBtn.style.display = 'block';
     });
 
     installBtn.addEventListener('click', () => {
@@ -301,35 +279,12 @@
       }
     });
 
-    // ========== 3. More Tools Toggle ==========
-    document.getElementById('moreBtn').addEventListener('click', () => {
-      const tools = document.getElementById('extraTools');
-      tools.classList.toggle('show');
-      document.getElementById('moreBtn').textContent = 
-        tools.classList.contains('show') ? '➖ কম দেখান' : '➕ আরও টুলস';
-    });
-
-    // ========== 4. Offline Detection ==========
-    window.addEventListener('online', () => {
-      document.getElementById('offlineBar').style.display = 'none';
-    });
-
-    window.addEventListener('offline', () => {
-      document.getElementById('offlineBar').style.display = 'block';
-    });
-
-    window.onload = () => {
-      if (!navigator.onLine) {
-        document.getElementById('offlineBar').style.display = 'block';
-      }
-    };
-
-    // ========== 5. Register Service Worker ==========
+    // ========== 3. Register Service Worker ==========
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('SW registered: ', reg))
-          .catch(err => console.log('SW failed: ', err));
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.log('SW failed', err));
       });
     }
   </script>
