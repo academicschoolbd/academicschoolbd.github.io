@@ -11,7 +11,7 @@
 
   <title>আমার বাংলা অ্যাপ</title>
 
-  <!-- Custom Bangla Fonts -->
+  <!-- Bangla Fonts -->
   <link href="https://fonts.maateen.me/bensen-handwriting/font.css" rel="stylesheet">
   <link href="https://fonts.maateen.me/adorsho-lipi/font.css" rel="stylesheet">
 
@@ -33,12 +33,12 @@
     body {
       font-family: 'BenSen Handwriting', 'Adorsho Lipi', sans-serif;
       background: #f5f5f5;
-      padding-top: 80px; /* Space for fixed header */
+      padding-top: 80px;
       min-height: 100vh;
       color: #333;
     }
 
-    /* Fixed Header & Navbar */
+    /* Fixed Header */
     .header {
       position: fixed;
       top: 0;
@@ -73,7 +73,6 @@
     .logo-text {
       font-size: 18px;
       font-weight: 600;
-      color: white;
     }
 
     .nav-links {
@@ -86,12 +85,17 @@
       text-decoration: none;
       font-size: 16px;
       font-weight: 500;
-      transition: opacity 0.3s;
     }
 
     .nav-links a:hover {
-      opacity: 0.9;
       text-decoration: underline;
+    }
+
+    /* Hide nav links on small screens */
+    @media (max-width: 600px) {
+      .nav-links {
+        display: none;
+      }
     }
 
     .container {
@@ -220,16 +224,6 @@
     }
 
     @media (max-width: 600px) {
-      .header {
-        flex-direction: column;
-        gap: 5px;
-        height: auto;
-        padding: 10px;
-      }
-      .nav-links {
-        gap: 12px;
-        font-size: 14px;
-      }
       .menu-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -251,7 +245,7 @@
 </head>
 <body>
 
-  <!-- Fixed Header & Navbar -->
+  <!-- Fixed Header -->
   <header class="header">
     <a href="index.html" class="logo">
       <img src="icon-192.png" alt="Logo" class="logo-img" />
@@ -355,14 +349,14 @@
 
     <!-- Footer -->
     <footer>
-      &copy; <span id="year"></span> Design with  <span class="love">❤️</span> by 
-      <strong>Abu Taher</strong> 
+      &copy; <span id="year"></span> আমার বাংলা অ্যাপ | ডিজাইন করা হয়েছে <span class="love">❤️</span> দিয়ে 
+      <strong>Abu Taher</strong> এর দ্বারা
     </footer>
 
   </div>
 
   <script>
-    // ========== 1. Bangla Date ==========
+    // Bangla Date
     const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
     const months = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
     const days = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
@@ -378,16 +372,14 @@
     }
     updateDate();
 
-    // ========== 2. PWA Install Prompt ==========
+    // PWA Install
     let deferredPrompt;
     const installBtn = document.getElementById('installBtn');
-
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
       installBtn.style.display = 'block';
     });
-
     installBtn.addEventListener('click', () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
@@ -398,7 +390,7 @@
       }
     });
 
-    // ========== 3. More Tools Toggle ==========
+    // More Tools Toggle
     document.getElementById('moreBtn').addEventListener('click', () => {
       const tools = document.getElementById('extraTools');
       tools.classList.toggle('show');
@@ -406,10 +398,10 @@
         tools.classList.contains('show') ? '➖ কম দেখান' : '➕ আরও টুলস';
     });
 
-    // ========== 4. Current Year in Footer ==========
+    // Year in Footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ========== 5. Service Worker Registration ==========
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
