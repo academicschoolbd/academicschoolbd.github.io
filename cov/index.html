@@ -1,0 +1,645 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>কামিল অ্যাসাইনমেন্ট কভার পেজ তৈরি </title>
+
+<!-- ফন্ট লাইব্রেরি -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@100..900&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ডিফল্ট ফন্ট */
+  body {
+    font-family: 'Noto Serif Bengali', serif;
+    background-color: #e0e5ec;
+    margin: 0;
+    padding: 10px;
+  }
+
+  /* সাইট ব্র্যান্ডিং লোগো (শুধুমাত্র ওয়েবসাইটে দেখাবে) */
+  .site-branding {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .site-branding img {
+    max-width: 300px;
+    height: 75px;
+    border-radius: 10px;
+  }
+
+  /* ইনপুট ফর্ম ডিজাইন */
+  .input-section {
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    border-top: 5px solid #006400;
+  }
+  .input-section h3 {
+    color: #006400;
+    border-bottom: 2px dashed #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    margin-top: 0;
+    font-size: 22px;
+  }
+  .input-section h4 {
+    background: #f1f8e9;
+    padding: 8px 12px;
+    border-left: 4px solid #006400;
+    color: #333;
+    margin-bottom: 20px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .input-full { grid-column: span 2; }
+  
+  .input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+    font-size: 15px;
+  }
+  .input-group input, .input-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    background: #fafafa;
+  }
+  .input-group input:focus, .input-group select:focus {
+    border-color: #006400;
+    background: #fff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,100,0,0.1);
+  }
+  input[readonly] { background-color: #eee; cursor: not-allowed; color: #666; }
+
+  /* প্রিন্ট বাটন */
+  button#gen-btn {
+    background: linear-gradient(135deg, #006400 0%, #004d00 100%);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 30px;
+    font-family: 'Noto Serif Bengali', serif;
+    box-shadow: 0 4px 15px rgba(0,100,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  button#gen-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,100,0,0.4); }
+
+  /* প্রিভিউ এরিয়া */
+  #pdf-preview-container {
+    background: #525659;
+    padding: 40px 10px; /* মোবাইলে ডানে-বামে ১০পিক্সেল প্যাডিং */
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* ডেস্কটপের জন্য সেন্টার */
+    align-items: flex-start;
+    border-radius: 8px;
+    min-height: 400px;
+  }
+
+  /* স্কেলিং র্যাপার - ফিক্সড */
+  #preview-wrapper {
+    /* টপ-লেফট থেকে স্কেল হবে যাতে মোবাইলে বাম পাশ থেকে শুরু হয় */
+    transform-origin: top left; 
+    transition: transform 0.3s ease;
+  }
+
+  /* মূল A4 পেজ */
+  #cover-page {
+    width: 210mm;
+    min-height: 297mm;
+    background: white;
+    padding: 10mm;
+    box-sizing: border-box;
+    position: relative;
+    color: #000;
+    font-family: 'Noto Serif Bengali', serif;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+
+  /* ডিজাইন বর্ডার */
+  .page-border {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #000;
+    padding: 3px;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+  .inner-border {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000;
+    padding: 8mm 15mm;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 3px;
+  }
+
+  /* হেডার ডিজাইন */
+  .header-section { text-align: center; width: 100%; margin-bottom: 5px; }
+  
+  .bismillah-img { 
+    width: 150px;
+    height: auto;
+    margin-bottom: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .uni-logo { 
+    width: 90px;
+    height: auto; 
+    margin: 5px auto;
+    display: block; 
+  }
+  
+  .uni-name {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #006400;
+    line-height: 1.1;
+    margin-top: 5px;
+  }
+  
+  .affiliation { 
+    font-size: 15px; 
+    margin: 3px 0; 
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  /* মাদ্রাসার নাম */
+  .madrasa-name {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #00008B;
+    margin-top: 5px;
+    line-height: 1.2;
+  }
+  .madrasa-address { 
+    font-size: 15px; 
+    margin-bottom: 10px;
+    color: #444; 
+  }
+
+  /* অ্যাসাইনমেন্ট বক্স */
+  .assignment-box-container {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0 20px 0;
+  }
+  .assignment-box {
+    border: 2px solid #000;
+    padding: 6px 40px;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 8px;
+    background: #fff;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  /* তথ্যের সারি */
+  .info-line {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    align-items: flex-end;
+    font-size: 17px;
+    line-height: 1.4;
+  }
+  .label {
+    font-weight: 700;
+    white-space: nowrap;
+    margin-right: 8px;
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+  
+  .subject-section { 
+    width: 100%; 
+    margin-bottom: 20px;
+    padding: 0 10px;
+  }
+
+  .details-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    margin-top: 5px;
+  }
+  
+  .details-col {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* হেডিং স্টাইল - শেপ */
+  .col-header {
+    text-align: center;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 15px;
+    border: 2px solid #000;
+    border-radius: 50px;
+    padding: 5px 40px;
+    display: inline-block;
+    width: auto;
+    background-color: #fff;
+  }
+
+  .details-col .label {
+    min-width: 110px;
+  }
+
+  .value-area {
+    flex-grow: 1;
+    border-bottom: 1px dotted #000;
+    font-weight: 500;
+    padding-left: 10px;
+    position: relative;
+    top: -4px;
+    min-height: 22px;
+  }
+
+  /* ফুটার - তারিখ */
+  .footer-section {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    padding-top: 15px;
+    padding-bottom: 5px;
+  }
+
+  /* প্রিন্ট CSS - ফিক্সড A4 */
+  @media print {
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    body { 
+      background: white; 
+      padding: 0; 
+      margin: 0; 
+    }
+    /* .site-branding ক্লাসে Logo.gif থাকবে, যা প্রিন্টে হাইড করা হবে */
+    .site-branding, .input-section, button#gen-btn, .print-note { 
+      display: none !important; 
+    }
+    #pdf-preview-container {
+      background: white;
+      padding: 0;
+      margin: 0;
+      display: block;
+      width: 210mm;
+      height: 297mm;
+      overflow: hidden;
+    }
+    /* প্রিন্টের সময় স্কেলিং রিসেট */
+    #preview-wrapper {
+      transform: none !important;
+      width: 100%;
+      height: 100%;
+    }
+    #cover-page {
+      width: 210mm;
+      height: 296mm;
+      box-shadow: none;
+      padding: 10mm;
+      margin: 0 auto;
+      page-break-after: avoid;
+      box-sizing: border-box;
+    }
+    .page-border {
+      border: 2px solid #000;
+      width: 100%;
+      height: 100%;
+    }
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+
+  /* মোবাইল রেসপন্সিভনেস */
+  @media (max-width: 600px) {
+    .input-grid { grid-template-columns: 1fr; }
+    .input-full { grid-column: span 1; }
+    #pdf-preview-container {
+      /* মোবাইলের জন্য বামে এলাইনমেন্ট যাতে top-left জুম ঠিক থাকে */
+      justify-content: flex-start; 
+      align-items: flex-start;
+      overflow: hidden;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ওয়েবসাইটের লোগো (শুধুমাত্র স্ক্রিনে দেখাবে) -->
+<div class="site-branding">
+  <img src="Logo.gif" alt="Abswer Logo">
+</div>
+
+<div class="input-section">
+  <h3>প্রতিষ্ঠান ও অ্যাসাইনমেন্ট তথ্য</h3>
+
+  <div class="input-grid">
+    <div class="input-group input-full">
+      <label>মাদ্রাসার নাম:</label>
+      <input type="text" id="in-madrasa" value="জামেয়া আহমদিয়া সুন্নিয়া কামিল মাদ্রাসা" oninput="updatePreview()">
+    </div>
+    <div class="input-group input-full">
+      <label>মাদ্রাসার ঠিকানা:</label>
+      <input type="text" id="in-address" value="ষোলশহর, পাঁচলাইশ, চট্টগ্রাম" oninput="updatePreview()">
+    </div>
+  </div>
+
+  <h4>কোর্সের বিবরণ</h4>
+  <div class="input-grid">
+    <div class="input-group input-full">
+      <label>অ্যাসাইনমেন্ট শিরোনাম:</label>
+      <input type="text" id="in-title" value="উসূলে হাদিস শাস্ত্রের উৎপত্তি ও ক্রমবিকাশ" oninput="updatePreview()">
+    </div>
+    <div class="input-group">
+      <label>কোর্স শিরোনাম:</label>
+      <input type="text" id="in-course" value="টিউটোরিয়াল" oninput="updatePreview()">
+    </div>
+    <div class="input-group">
+      <label>কোর্স কোড:</label>
+      <input type="text" id="in-code" value="৬১১১০৯" oninput="updatePreview()">
+    </div>
+  </div>
+
+  <div class="input-grid">
+    <!-- শিক্ষক -->
+    <div class="input-full"><h4>শিক্ষকের তথ্য (নির্দেশনায়)</h4></div>
+    <div class="input-group">
+      <label>শিক্ষকের নাম:</label>
+      <input type="text" id="in-tname" value="মাওলানা মোহাম্মদ আবুল হাসানাত আল-কাদেরী" oninput="updatePreview()">
+    </div>
+    <div class="input-group">
+      <label>শিক্ষকের পদবি:</label>
+      <input type="text" id="in-desig" value="মুহাদ্দিস" oninput="updatePreview()">
+    </div>
+
+    <!-- শিক্ষার্থী -->
+    <div class="input-full"><h4>শিক্ষার্থীর তথ্য (রচনায়)</h4></div>
+    <div class="input-group">
+      <label>নাম:</label>
+      <input type="text" id="in-sname" value="মোঃ আব্দুল্লাহ আল মামুন" oninput="updatePreview()">
+    </div>
+    <div class="input-group">
+      <label>রেজিঃ নং:</label>
+      <input type="text" id="in-reg" value="২৪২২৫৩৪৬" oninput="updatePreview()">
+    </div>
+    <div class="input-group">
+      <label>শ্রেণি (ফিক্সড):</label>
+      <input type="text" id="in-class" value="কামিল (স্নাতকোত্তর)" readonly>
+    </div>
+    <div class="input-group">
+      <label>পর্ব:</label>
+      <select id="in-part" onchange="updatePreview()">
+        <option value="১ম পর্ব" selected>১ম পর্ব</option>
+        <option value="২য় পর্ব">২য় পর্ব</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>বিভাগ:</label>
+      <select id="in-dept" onchange="updatePreview()">
+        <option value="আল হাদিস" selected>আল হাদিস</option>
+        <option value="আত তাফসির">আত তাফসির</option>
+        <option value="আল ফিকহ">আল ফিকহ</option>
+        <option value="আল আদাব">আল আদাব</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>সেশন:</label>
+      <input type="text" id="in-session" value="২০২৪-২০২৫" oninput="updatePreview()">
+    </div>
+    <div class="input-group">
+      <label>পরীক্ষার বছর:</label>
+      <input type="text" id="in-exam-year" value="২০২৪" oninput="updatePreview()">
+    </div>
+    <div class="input-group">
+      <label>জমাদানের তারিখ:</label>
+      <input type="date" id="in-date" value="2026-01-28" onchange="updatePreview()">
+    </div>
+  </div>
+
+  <button id="gen-btn" onclick="printPage()">🖨️ কভার PDF প্রিন্ট / সেভ করুন</button>
+  <p class="print-note" style="text-align: center; color: #d32f2f; font-size: 15px; margin-top: 15px; font-weight: bold; background: #fff3e0; padding: 10px; border-radius: 5px;">
+    ⚠️ গুরুত্বপূর্ণ: প্রিন্ট প্রিভিউ উইন্ডোতে <b>"More settings"</b> থেকে <b>"Background graphics"</b> অপশনটি অবশ্যই টিক দিন, অন্যথায় ডিজাইন ও বর্ডার দেখা যাবে না।
+  </p>
+</div>
+
+<!-- প্রিভিউ এরিয়া (A4 ডকুমেন্ট) -->
+<div id="pdf-preview-container">
+  <!-- স্কেলিং র্যাপার -->
+  <div id="preview-wrapper">
+    <div id="cover-page">
+      <div class="page-border">
+        <div class="inner-border">
+        
+          <!-- হেডার -->
+          <div class="header-section">
+            <img src="bismillah.png" class="bismillah-img" alt="Bismillah" crossorigin="anonymous">
+            <div class="uni-name">ইসলামি আরবি বিশ্ববিদ্যালয়, ঢাকা</div>
+            <img src="iau-logo.png" class="uni-logo" id="main-logo" alt="Logo" crossorigin="anonymous">
+            <div class="affiliation">এর অধিভুক্ত</div>
+            <div class="madrasa-name" id="out-madrasa">মাদ্রাসার নাম...</div>
+            <div class="madrasa-address" id="out-address">মাদ্রাসার ঠিকানা...</div>
+          </div>
+
+          <!-- অ্যাসাইনমেন্ট বক্স -->
+          <div class="assignment-box-container">
+            <div class="assignment-box">অ্যাসাইনমেন্ট</div>
+          </div>
+
+          <!-- বিষয় ও কোর্স -->
+          <div class="subject-section">
+            <div class="info-line">
+              <span class="label">শিরোনাম:</span>
+              <span class="value-area" id="out-title"></span>
+            </div>
+            <div class="info-line">
+              <span class="label">কোর্স শিরোনাম:</span>
+              <span class="value-area" id="out-course"></span>
+            </div>
+            <div class="info-line">
+              <span class="label">কোর্স কোড:</span>
+              <span class="value-area" id="out-code"></span>
+            </div>
+          </div>
+
+          <!-- মেইন কনটেন্ট -->
+          <div class="details-container">
+            <div class="details-col">
+              <div class="col-header">নির্দেশনায়</div>
+              <div class="info-line">
+                <span class="label">শিক্ষকের নাম:</span>
+                <span class="value-area" id="out-tname"></span>
+              </div>
+              <div class="info-line">
+                <span class="label">পদবি:</span>
+                <span class="value-area" id="out-desig"></span>
+              </div>
+            </div>
+
+            <div class="details-col">
+              <div class="col-header">রচনায়</div>
+              <div class="info-line">
+                <span class="label">নাম:</span>
+                <span class="value-area" id="out-sname"></span>
+              </div>
+              <div class="info-line">
+                <span class="label">রেজিঃ নং:</span>
+                <span class="value-area" id="out-reg"></span>
+              </div>
+              <div class="info-line">
+                <span class="label">শ্রেণি:</span>
+                <span class="value-area" id="out-class">কামিল (স্নাতকোত্তর)</span>
+              </div>
+              <div class="info-line">
+                <span class="label">পর্ব:</span>
+                <span class="value-area" id="out-part">১ম পর্ব</span>
+              </div>
+              <div class="info-line">
+                <span class="label">বিভাগ:</span>
+                <span class="value-area" id="out-dept">আল হাদিস</span>
+              </div>
+              <div class="info-line">
+                <span class="label">সেশন:</span>
+                <span class="value-area" id="out-session"></span>
+              </div>
+              <div class="info-line">
+                <span class="label">পরীক্ষার বছর:</span>
+                <span class="value-area" id="out-exam-year"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ফুটার -->
+          <div class="footer-section">
+            জমাদানের তারিখ: <span id="out-date">../../....</span> খ্রি.
+          </div>
+        
+        </div> <!-- End Inner Border -->
+      </div> <!-- End Page Border -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // বাংলা সংখ্যা কনভার্টার
+  function toBanglaNum(str) {
+    if(!str) return "";
+    const numbers = { '0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯' };
+    return String(str).replace(/[0-9]/g, match => numbers[match]);
+  }
+
+  function updatePreview() {
+    const ids = ['madrasa', 'address', 'title', 'course', 'code', 'tname', 'desig', 'sname', 'reg', 'session', 'exam-year'];
+    
+    ids.forEach(id => {
+      document.getElementById('out-' + id).innerText = document.getElementById('in-' + id).value;
+    });
+
+    document.getElementById('out-class').innerText = document.getElementById('in-class').value;
+    document.getElementById('out-part').innerText = document.getElementById('in-part').value;
+    document.getElementById('out-dept').innerText = document.getElementById('in-dept').value;
+
+    const dateInput = document.getElementById('in-date').value;
+    if(dateInput) {
+      const parts = dateInput.split("-");
+      const formatted = `${toBanglaNum(parts[2])}/${toBanglaNum(parts[1])}/${toBanglaNum(parts[0])}`;
+      document.getElementById('out-date').innerText = formatted;
+    } else {
+      document.getElementById('out-date').innerText = "../../....";
+    }
+  }
+
+  function printPage() {
+    window.print();
+  }
+
+  // অটো-স্কেলিং ফাংশন (মোবাইলের জন্য ফিক্সড)
+  function fitPreview() {
+    const container = document.getElementById('pdf-preview-container');
+    const wrapper = document.getElementById('preview-wrapper');
+    
+    // A4 width in px (approx) = 794px at 96dpi
+    const a4Width = 794; 
+    const a4Height = 1123; // A4 height
+    const containerWidth = container.offsetWidth;
+    
+    // প্যাডিং বাদ দিয়ে ক্যালকুলেশন
+    const availableWidth = containerWidth - 20; 
+
+    if (availableWidth < a4Width) {
+      const scale = availableWidth / a4Width;
+      wrapper.style.transform = `scale(${scale})`;
+      // হাইট এডজাস্টমেন্ট
+      wrapper.style.height = `${a4Height * scale}px`;
+      // উইডথ টাও এডজাস্ট করতে হবে যাতে কন্টেইনার ওভারফ্লো না করে
+      wrapper.style.width = `${a4Width * scale}px`;
+    } else {
+      wrapper.style.transform = 'none';
+      wrapper.style.height = 'auto';
+      wrapper.style.width = 'auto';
+    }
+  }
+
+  window.onload = function() {
+    updatePreview();
+    fitPreview();
+  };
+  
+  window.onresize = fitPreview;
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
